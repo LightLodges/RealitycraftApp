@@ -1,0 +1,539 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;REALITYCRAFT &amp; 3D INTEROPERABILITY&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #0F0C29;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: -webkit-linear-gradient(to right, #24243E, #302B63, #0F0C29);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(to right, #24243E, #302B63, #0F0C29);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prismatic-card {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(255, 255, 255, 0.05);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>backdrop-filter: blur(15px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid rgba(255, 255, 255, 0.1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s ease-in-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prismatic-card:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-8px) scale(1.02);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 20px 40px rgba(0,0,0,0.3);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-color: rgba(236, 72, 153, 0.6);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.prismatic-header {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 3rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.1;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 900;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: -webkit-linear-gradient(45deg, #EC4899, #FDE047, #38BDF8, #A78BFA);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>-webkit-background-clip: text;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>-webkit-text-fill-color: transparent;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: gradient-flow 10s ease infinite;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-size: 400% 400%;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@media (min-width: 768px) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>.prismatic-header {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>font-size: 4.5rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes gradient-flow {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>0% { background-position: 0% 50%; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>50% { background-position: 100% 50%; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>100% { background-position: 0% 50%; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 400px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#interactive-3d-viewer {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: grab;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#interactive-3d-viewer:active { cursor: grabbing; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-overlay {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: fixed; top: 0; left: 0; right: 0; bottom: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(0, 0, 0, 0.7);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>backdrop-filter: blur(5px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex; align-items: center; justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 50;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>opacity: 0; visibility: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-overlay.active { opacity: 1; visibility: visible; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-content {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(135deg, #1e1b4b, #312e6a);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #e0e7ff;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 2rem; border-radius: 1rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 90%; max-width: 600px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-height: 90vh; overflow-y: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: scale(0.9);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: transform 0.3s ease;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid rgba(167, 139, 250, 0.4);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.modal-overlay.active .modal-content { transform: scale(1); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.feature-icon {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: -webkit-linear-gradient(45deg, #EC4899, #A78BFA);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>-webkit-background-clip: text;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>-webkit-text-fill-color: transparent;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.connector-line {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 2px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 3rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(to bottom, #a78bfa, #ec4899);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.toggle-switch {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: inline-block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 50px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 28px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.toggle-switch input {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>opacity: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slider {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>right: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>bottom: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #312e6a;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: .4s;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 28px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slider:before {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>content: "";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>bottom: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: white;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: .4s;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>input:checked + .slider {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #EC4899;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>input:checked + .slider:before {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateX(22px);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="text-indigo-100"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header class="text-center py-16 md:py-24 px-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1 class="prismatic-header uppercase"&gt;REALITYCRAFT &amp; 3D INTEROPERABILITY&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p class="text-lg md:text-xl mt-4 max-w-3xl mx-auto text-indigo-200"&gt;The definitive guide to the open standards pipeline for creating portable, dynamic 3D assets that live everywhere.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;section class="lg:col-span-3 prismatic-card rounded-2xl p-6 md:p-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold text-center text-pink-400 mb-6"&gt;What is a glTF™ Asset?&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-center text-indigo-200 max-w-4xl mx-auto mb-8"&gt;Defined by Khronos, glTF is the open standard for 3D assets, often called the "JPEG of 3D." It's not just a model format; it's a complete scene description designed for efficient transmission and loading of 3D content on any platform.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex flex-col items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-6xl feature-icon"&gt;📦&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-bold text-lg mt-2 text-white"&gt;Compact &amp; Efficient&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm text-indigo-300 mt-1"&gt;Uses binary containers (.glb) to package geometry, textures, and animation into a single, small file for fast web delivery.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex flex-col items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-6xl feature-icon"&gt;🎨&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-bold text-lg mt-2 text-white"&gt;PBR Materials&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm text-indigo-300 mt-1"&gt;Standardizes Physically-Based Rendering, ensuring your asset's appearance is consistent across all viewers and lighting conditions.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex flex-col items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-6xl feature-icon"&gt;🤸&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-bold text-lg mt-2 text-white"&gt;Full Animation&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm text-indigo-300 mt-1"&gt;Includes a robust animation system for skeletal (skinning/rigging) and object transformations (move, rotate, scale).&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex flex-col items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-6xl feature-icon"&gt;🧩&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-bold text-lg mt-2 text-white"&gt;Extensible&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm text-indigo-300 mt-1"&gt;A core feature set can be expanded with extensions for physics, interactivity, advanced materials, and more.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;section class="lg:col-span-3 prismatic-card rounded-2xl p-6 md:p-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold text-center text-cyan-300 mb-6"&gt;Interactive Asset Preview: glTF in Action&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex flex-col lg:flex-row gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="lg:w-2/3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="chart-container bg-indigo-900/50 rounded-2xl"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div id="interactive-3d-viewer"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="lg:w-1/3 flex flex-col justify-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-bold text-xl text-white mb-4"&gt;Runtime Interactivity&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-indigo-200 text-sm mb-6"&gt;A glTF asset is not a static object; it's a live scene graph. Its properties can be accessed and modified by code at runtime. This is the key to interoperability: an asset can change its look and function to fit any world or platform. Use the controls below to see this in action.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex items-center justify-between bg-black/20 p-3 rounded-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;label for="color-toggle" class="font-semibold text-white"&gt;Change Color&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;label class="toggle-switch"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;input type="checkbox" id="color-toggle"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="slider"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex items-center justify-between bg-black/20 p-3 rounded-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;label for="wireframe-toggle" class="font-semibold text-white"&gt;Toggle Wireframe&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;label class="toggle-switch"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;input type="checkbox" id="wireframe-toggle"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="slider"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex items-center justify-between bg-black/20 p-3 rounded-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;label for="rotate-toggle" class="font-semibold text-white"&gt;Pause Animation&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;label class="toggle-switch"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;input type="checkbox" id="rotate-toggle"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="slider"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/section&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;section class="lg:col-span-3 prismatic-card rounded-2xl p-6 md:p-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold text-center text-yellow-300 mb-6"&gt;From Blender to Web: The glTF Export Pipeline&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-center text-indigo-200 max-w-4xl mx-auto mb-8"&gt;Creating a performant glTF asset requires a specific workflow inside your 3D authoring tool (like Blender) before you export.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex flex-col lg:flex-row items-center justify-between space-y-8 lg:space-y-0 lg:space-x-4 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex flex-col items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="w-24 h-24 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center text-4xl shadow-lg"&gt;📦&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-bold text-lg mt-4"&gt;1. Modeling &amp; UVs&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm text-indigo-300 w-48"&gt;Create low-poly models. Ensure clean topology and non-overlapping UV maps for textures.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-4xl text-purple-400 transform lg:rotate-0 rotate-90"&gt;&amp;rarr;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex flex-col items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="w-24 h-24 bg-gradient-to-br from-pink-500 to-rose-600 rounded-full flex items-center justify-center text-4xl shadow-lg"&gt;🎨&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-bold text-lg mt-4"&gt;2. PBR Texturing&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm text-indigo-300 w-48"&gt;Use the Principled BSDF shader. Connect Base Color, Metallic, Roughness, and Normal maps.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-4xl text-pink-400 transform lg:rotate-0 rotate-90"&gt;&amp;rarr;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex flex-col items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="w-24 h-24 bg-gradient-to-br from-sky-500 to-cyan-600 rounded-full flex items-center justify-center text-4xl shadow-lg"&gt;⚙️&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-bold text-lg mt-4"&gt;3. Export Settings&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm text-indigo-300 w-48"&gt;Use the glTF 2.0 exporter. Enable "Apply Modifiers" and "Compress" (Draco) options.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;div class="text-4xl text-cyan-400 transform lg:rotate-0 rotate-90"&gt;&amp;rarr;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex flex-col items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="w-24 h-24 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full flex items-center justify-center text-4xl shadow-lg"&gt;✔️&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-bold text-lg mt-4"&gt;4. Ready Asset&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm text-indigo-300 w-48"&gt;The result is a self-contained, performant `.glb` or `.gltf` file.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/section&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;section class="lg:col-span-3 prismatic-card rounded-2xl p-6 md:p-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold text-center text-yellow-300 mb-6"&gt;In-Depth Creator Workflow&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-center text-indigo-200 max-w-4xl mx-auto mb-8"&gt;Each step in the production pipeline is critical for creating scalable and interoperable content. Click on any step below to reveal detailed information, tools, and best practices.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="step-1" class="prismatic-card p-4 rounded-lg cursor-pointer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-5xl"&gt;🖌️&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-bold mt-2"&gt;1. Author&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-xs mt-1 text-indigo-300"&gt;Model, texture, and animate your 3D assets.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="step-2" class="prismatic-card p-4 rounded-lg cursor-pointer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-5xl"&gt;🔎&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-bold mt-2"&gt;2. Validate&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-xs mt-1 text-indigo-300"&gt;Check for errors and spec conformance.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="step-3" class="prismatic-card p-4 rounded-lg cursor-pointer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-5xl"&gt;⚙️&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-bold mt-2"&gt;3. Optimize&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-xs mt-1 text-indigo-300"&gt;Compress geometry, textures, and more.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="step-4" class="prismatic-card p-4 rounded-lg cursor-pointer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-5xl"&gt;🧩&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-bold mt-2"&gt;4. Tile&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-xs mt-1 text-indigo-300"&gt;Stream massive datasets with 3D Tiles.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="step-5" class="prismatic-card p-4 rounded-lg cursor-pointer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-5xl"&gt;🚀&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-bold mt-2"&gt;5. Deploy&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-xs mt-1 text-indigo-300"&gt;Integrate into your web application.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/section&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;section class="lg:col-span-3 prismatic-card rounded-2xl p-6 md:p-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold text-center text-pink-400 mb-6"&gt;Unlocking True Interoperability&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-center text-indigo-200 max-w-4xl mx-auto mb-8"&gt;A single glTF asset is the key to content that can live and react across countless platforms. This is achieved by layering functionality through extensions and connecting to live data with webhooks.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex flex-col items-center w-full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="prismatic-card p-4 rounded-xl border-2 border-pink-500 shadow-2xl"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-bold text-lg text-center"&gt;Master .glb Asset&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="connector-line"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex flex-col md:flex-row justify-around w-full items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex flex-col items-center m-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-cyan-300"&gt;Extensions for Functionality&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-xs text-center max-w-xs text-indigo-300"&gt;Add features like interactivity, physics, or custom shaders that platforms can choose to support.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex flex-col items-center m-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-yellow-300"&gt;Webhooks for Dynamic Data&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-xs text-center max-w-xs text-indigo-300"&gt;Connect your asset to external APIs. Update colors, text, or trigger animations based on real-world events.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="connector-line"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-4xl mt-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="prismatic-card p-4 rounded-lg text-center"&gt;🌐&lt;span class="block font-semibold text-sm"&gt;Web Browser&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="prismatic-card p-4 rounded-lg text-center"&gt;👓&lt;span class="block font-semibold text-sm"&gt;VR Headset&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="prismatic-card p-4 rounded-lg text-center"&gt;📱&lt;span class="block font-semibold text-sm"&gt;AR on Mobile&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="prismatic-card p-4 rounded-lg text-center"&gt;🎮&lt;span class="block font-semibold text-sm"&gt;Game Engine&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;section class="lg:col-span-3 bg-transparent rounded-2xl p-6 md:p-8 text-white"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-3xl font-bold text-center text-cyan-300 mb-4"&gt;Performance: Monolithic vs. Tiled&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;p class="text-center text-sm text-indigo-200 mb-6"&gt;For world-scale scenes, interoperability depends on performance. A tiled approach with 3D Tiles maintains a smooth experience, while a single monolithic file fails.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="chart-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;canvas id="performanceChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="modal" class="modal-overlay"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="modal-content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3 id="modal-title" class="text-2xl font-bold text-yellow-300 mb-4"&gt;&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="modal-body" class="text-indigo-200 space-y-4"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button id="modal-close" class="mt-6 w-full bg-pink-600 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded-lg transition-colors"&gt;Close&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer class="text-center py-8 px-4 mt-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p class="text-lg font-bold text-white mt-2"&gt;REALITYCRAFT.APP&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.addEventListener('DOMContentLoaded', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const scene = new THREE.Scene();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const container = document.getElementById('interactive-3d-viewer');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!container) return;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>camera.position.z = 2.5;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });</p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderer.setSize(container.clientWidth, container.clientHeight);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderer.setPixelRatio(window.devicePixelRatio);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>container.appendChild(renderer.domElement);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>scene.add(ambientLight);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const directionalLight = new THREE.DirectionalLight(0xffffff, 1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>directionalLight.position.set(2, 3, 4);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>scene.add(directionalLight);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const geometry = new THREE.TorusKnotGeometry(0.8, 0.25, 100, 16);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const originalColor = 0xEC4899;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const alternateColor = 0x38BDF8;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const material = new THREE.MeshStandardMaterial({</p>
+<p class="p1"><span class="Apple-converted-space">                </span>color: originalColor,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>metalness: 0.2,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>roughness: 0.4,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>emissive: 0x1E1B4B,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const knot = new THREE.Mesh(geometry, material);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>scene.add(knot);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>let isMouseDown = false;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let previousMousePosition = { x: 0, y: 0 };</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let autoRotate = true;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>function onPointerDown(e) { isMouseDown = true; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>function onPointerUp() { isMouseDown = false; }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>function onPointerMove(e) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (!isMouseDown) return;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const deltaX = e.clientX - previousMousePosition.x;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const deltaY = e.clientY - previousMousePosition.y;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>knot.rotation.y += deltaX * 0.01;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>knot.rotation.x += deltaY * 0.01;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>previousMousePosition.x = e.clientX;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>previousMousePosition.y = e.clientY;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>container.addEventListener('pointerdown', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>isMouseDown = true;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>previousMousePosition = { x: e.clientX, y: e.clientY };</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>container.addEventListener('pointerup', onPointerUp);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>container.addEventListener('pointerleave', onPointerUp);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>container.addEventListener('pointermove', onPointerMove);</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>window.addEventListener('resize', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>camera.aspect = container.clientWidth / container.clientHeight;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>camera.updateProjectionMatrix();</p>
+<p class="p1"><span class="Apple-converted-space">                </span>renderer.setSize(container.clientWidth, container.clientHeight);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>function animate() {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>requestAnimationFrame(animate);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (autoRotate &amp;&amp; !isMouseDown) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>knot.rotation.x += 0.002;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>knot.rotation.y += 0.002;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>renderer.render(scene, camera);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animate();</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('color-toggle').addEventListener('change', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>knot.material.color.set(e.target.checked ? alternateColor : originalColor);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('wireframe-toggle').addEventListener('change', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>knot.material.wireframe = e.target.checked;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('rotate-toggle').addEventListener('change', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>autoRotate = !e.target.checked;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const modalData = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"step-1": {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "1. Authoring Assets",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>body: `&lt;p&gt;This is the creative foundation. The goal is to produce 3D models that are not only visually appealing but also technically optimized for real-time rendering.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;h4 class="font-bold mt-4 text-pink-400"&gt;Key Tools:&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;ul class="list-disc list-inside"&gt;&lt;li&gt;&lt;strong&gt;Blender:&lt;/strong&gt; The premier open-source tool for 3D modeling, sculpting, and animation.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Substance Painter:&lt;/strong&gt; Industry standard for creating high-quality PBR textures.&lt;/li&gt;&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;h4 class="font-bold mt-4 text-pink-400"&gt;Best Practices:&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;ul class="list-disc list-inside"&gt;&lt;li&gt;&lt;strong&gt;Low Polygon Count:&lt;/strong&gt; Aim for the lowest polygon count that maintains visual fidelity. Use normal maps to fake high-resolution details.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;PBR Materials:&lt;/strong&gt; Exclusively use the Principled BSDF shader. This maps directly to glTF's PBR material model.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Power-of-Two Textures:&lt;/strong&gt; Use texture dimensions like 1024x1024 or 2048x2048 for optimal memory usage and compatibility.&lt;/li&gt;&lt;/ul&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"step-2": {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "2. Validating Conformance",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>body: `&lt;p&gt;Before optimization, ensure your exported glTF file is valid and conforms to the official specification. This step catches errors early and prevents issues in downstream applications.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;h4 class="font-bold mt-4 text-pink-400"&gt;Key Tool:&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;a href="https://github.khronos.org/glTF-Validator/" target="_blank" class="text-yellow-300 hover:text-yellow-400"&gt;&lt;strong&gt;Official Khronos glTF Validator:&lt;/strong&gt;&lt;/a&gt; A web-based tool where you can drag-and-drop your .gltf or .glb file to get a detailed report.</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;h4 class="font-bold mt-4 text-pink-400"&gt;Common Issues to Check:&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;ul class="list-disc list-inside"&gt;&lt;li&gt;Missing textures or binary data.&lt;/li&gt;&lt;li&gt;Incorrectly configured material properties.&lt;/li&gt;&lt;li&gt;Invalid animation paths or accessors.&lt;/li&gt;&lt;/ul&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"step-3": {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "3. Optimizing for Performance",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>body: `&lt;p&gt;Optimization is the process of reducing file size and improving rendering performance without significantly impacting visual quality. This is arguably the most important step for web-based delivery.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;h4 class="font-bold mt-4 text-pink-400"&gt;Key Tool:&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;a href="https://gltf-transform.dev/" target="_blank" class="text-yellow-300 hover:text-yellow-400"&gt;&lt;strong&gt;glTF-Transform:&lt;/strong&gt;&lt;/a&gt; A powerful command-line tool for surgical optimizations.</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;h4 class="font-bold mt-4 text-pink-400"&gt;Example CLI Commands:&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;pre class="bg-gray-900 p-2 rounded-md text-sm whitespace-pre-wrap"&gt;&lt;code&gt;# Compress textures and geometry\ngltf-transform draco input.glb output.glb\ngltf-transform ktx2 input.glb output.glb&lt;/code&gt;&lt;/pre&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;p class="mt-2"&gt;These commands apply Draco mesh compression and KTX2 universal texture compression, drastically reducing file size.&lt;/p&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"step-4": {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "4. Tiling for Massive Worlds",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>body: `&lt;p&gt;When a single model is too large to load into memory (e.g., a city, a factory, a detailed scan), you must convert it into a streamable format like 3D Tiles.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;h4 class="font-bold mt-4 text-pink-400"&gt;Key Concept:&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;p&gt;3D Tiles breaks the model into a hierarchy of smaller chunks. The viewer then selectively loads only the chunks that are currently in view, based on the camera's position. This is called Level of Detail (LOD) streaming.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;h4 class="font-bold mt-4 text-pink-400"&gt;Key Tool:&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;a href="https://cesium.com/platform/cesium-ion/" target="_blank" class="text-yellow-300 hover:text-yellow-400"&gt;&lt;strong&gt;Cesium ion:&lt;/strong&gt;&lt;/a&gt; A cloud platform that can ingest massive 3D models and automatically generate optimized 3D Tilesets for streaming.&lt;/p&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"step-5": {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "5. Deploying to the Web",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>body: `&lt;p&gt;The final step is to load your optimized and/or tiled asset into a web application for users to experience.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;h4 class="font-bold mt-4 text-pink-400"&gt;Key Libraries:&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;ul class="list-disc list-inside"&gt;&lt;li&gt;&lt;strong&gt;Three.js:&lt;/strong&gt; A versatile library for general-purpose 3D graphics, excellent for loading individual glTF assets.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;CesiumJS:&lt;/strong&gt; A specialized library for high-precision, world-scale geospatial visualization, required for rendering 3D Tiles.&lt;/li&gt;&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;h4 class="font-bold mt-4 text-pink-400"&gt;Example (Three.js):&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                           </span>&lt;pre class="bg-gray-900 p-2 rounded-md text-sm whitespace-pre-wrap"&gt;&lt;code&gt;import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';\n\nconst loader = new GLTFLoader();\nloader.load('asset.glb', (gltf) =&gt; {\n<span class="Apple-converted-space">  </span>scene.add(gltf.scene);\n});&lt;/code&gt;&lt;/pre&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const modal = document.getElementById('modal');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const modalTitle = document.getElementById('modal-title');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const modalBody = document.getElementById('modal-body');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const modalClose = document.getElementById('modal-close');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.querySelectorAll('.prismatic-card[id^="step-"]').forEach(card =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>card.addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const data = modalData[card.id];</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (data) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>modalTitle.textContent = data.title;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>modalBody.innerHTML = data.body;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>modal.classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const closeModal = () =&gt; modal.classList.remove('active');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modalClose.addEventListener('click', closeModal);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>modal.addEventListener('click', (e) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (e.target === modal) closeModal();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const chartOptions = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>responsive: true,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>maintainAspectRatio: false,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>legend: { labels: { color: '#e0e7ff', font: { size: 14 } } }</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>y: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>type: 'logarithmic',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>title: { display: true, text: 'Resource Usage (Log Scale)', color: '#c7d2fe', font: {size: 14}},</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>grid: { color: 'rgba(167, 139, 250, 0.2)' },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>ticks: { color: '#c7d2fe' }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>x: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>title: { display: true, text: 'World Complexity', color: '#c7d2fe', font: {size: 14}},</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>grid: { display: false },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>ticks: { color: '#c7d2fe' }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const performanceCtx = document.getElementById('performanceChart')?.getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (performanceCtx) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>new Chart(performanceCtx, {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>type: 'line',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>labels: ['10k', '1M', '100M', '1B Polys'],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>label: 'Monolithic glTF',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>data: [10, 250, 6000, null],</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>borderColor: '#FDE047',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>backgroundColor: 'rgba(253, 224, 71, 0.2)',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>fill: true,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>tension: 0.4,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>pointRadius: 5,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>pointBackgroundColor: '#FDE047'</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}, {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>label: '3D Tiles Stream',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>data: [8, 12, 16, 20],</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>borderColor: '#EC4899',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>backgroundColor: 'rgba(236, 72, 153, 0.2)',</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>fill: true,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>tension: 0.4,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>pointRadius: 5,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>pointBackgroundColor: '#EC4899'</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>options: chartOptions</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
